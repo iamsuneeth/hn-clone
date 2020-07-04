@@ -1,15 +1,53 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useRef, useEffect } from "react";
 import { select } from "d3-selection";
 import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { max } from "d3-array";
 import { line as d3Line } from "d3-shape";
 import { axisBottom, axisLeft } from "d3-axis";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import { colors } from "../../theme/constants";
 
 interface Props {
   data: { id: string; votes: number }[];
 }
 
 const margin = 40;
+
+const defaultColors = {
+  guide: "#ccc",
+  domain: "#555",
+};
+
+const chartStyles = css`
+  .tick {
+    text {
+      fill: ${colors.textColor};
+    }
+  }
+
+  .y-axis {
+    .tick {
+      line {
+        stroke: ${defaultColors.guide};
+      }
+      &:last-child {
+        line {
+          stroke: none;
+        }
+      }
+      &:first-of-type {
+        line {
+          stroke: ${defaultColors.domain};
+        }
+      }
+    }
+    .domain {
+      stroke: ${defaultColors.domain};
+    }
+  }
+`;
 
 export const LineChart = ({ data }: Props) => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -24,9 +62,7 @@ export const LineChart = ({ data }: Props) => {
     const svg = select(svgRef.current);
 
     const eql = Math.ceil(width / data.length);
-    const x = scaleOrdinal(
-        data.map((_, index) => margin + index * eql + (index === 0 ? 20 : 0))
-      ),
+    const x = scaleOrdinal(data.map((_, index) => margin + 10 + index * eql)),
       y = scaleLinear().rangeRound([height, margin]);
 
     const line = d3Line<{ id: string; votes: number }>()
@@ -88,7 +124,7 @@ export const LineChart = ({ data }: Props) => {
   }, [data]);
 
   return (
-    <svg ref={svgRef} width="100%" height="400px">
+    <svg ref={svgRef} width="100%" height="400px" css={chartStyles}>
       <g className="x-axis" />
       <g className="y-axis" />
     </svg>
