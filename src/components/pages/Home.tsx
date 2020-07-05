@@ -6,6 +6,7 @@ import { get, set } from "idb-keyval";
 import { ListFetcher } from "../../api/request";
 import { Dashboard } from "../home/Dashboard";
 import { IDBKeys } from "../../constants/storage";
+import { Spinner } from "../elements/loader/Loader";
 
 export interface News {
   num_comments: number;
@@ -184,6 +185,10 @@ export const Home = ({
     pages: data?.nbPages,
     perPage: data?.hitsPerPage,
   };
+
+  if (!data) {
+    return <Spinner />;
+  }
 
   return (
     <Dashboard
