@@ -13,5 +13,5 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.1.6
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "news_hacker_hn_clone"
+          heroku_app_name: "news-hacker-hn-clone"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
