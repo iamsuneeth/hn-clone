@@ -37,7 +37,9 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "heroku-postbuild": "webpack --config webpack.server.js --mode=production",
+    "start": "node ./server-build/index.js",
+    "dev:client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -47,6 +49,10 @@
     "dev": "run-p dev:*",
     "preprod": "run-s build",
     "prod": "NODE_ENV=production webpack --config webpack.server.js --mode=production"
+  },
+  "engines": {
+    "node": "13.x",
+    "yarn": "1.x"
   },
   "eslintConfig": {
     "extends": "react-app"

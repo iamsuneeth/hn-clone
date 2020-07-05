@@ -46,6 +46,11 @@ Run `yarn build` and start webpack in watch mode. Also start nodemon for server 
 
 Creates final production build
 
+## Planned Updates
+
+- Add More unit tests to make future updates easier
+- Replace Express with NestJs
+
 ## Thanks
 
 - [@artsy/fresnel](https://github.com/artsy/fresnel) - awesome resposniveness in SSR
