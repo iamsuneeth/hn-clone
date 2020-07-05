@@ -52,6 +52,7 @@ Creates final production build
 - Replace Express with NestJs
 - Loading indicator for client side route switching
 - implement renderToNodeStream instead of renderToString
+- Error handing with error boundary
 
 ## Thanks
 
