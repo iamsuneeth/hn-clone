@@ -2,7 +2,11 @@
 import React, { ReactElement } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-interface IconButtonProps {
+interface IconButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   icon: ReactElement;
 }
 

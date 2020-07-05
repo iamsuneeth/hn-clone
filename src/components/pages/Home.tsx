@@ -59,14 +59,14 @@ export const Home = ({ match }: RouteComponentProps<{ id: string }>) => {
   });
 
   const [queueHide, setQueuHide] = useState<string[]>([]);
-  const [queueVote, setQueuVote] = useState({});
+  const [queueVote, setQueuVote] = useState<HomeState["votes"]>({});
 
   const markHidden = (id: string) => {
     setState((state) => ({
       ...state,
       hidden: {
         ...state.hidden,
-        id: true,
+        [id]: true,
       },
     }));
     setQueuHide([...queueHide, id]);
@@ -77,13 +77,13 @@ export const Home = ({ match }: RouteComponentProps<{ id: string }>) => {
       ...state,
       votes: {
         ...state.votes,
-        id: state.votes[id] + 1,
+        [id]: (state.votes[id] || 0) + 1,
       },
     }));
-    setQueuVote({
-      ...queueVote,
-      id: state.votes[id] + 1,
-    });
+    setQueuVote((state) => ({
+      ...state,
+      [id]: (state[id] || 0) + 1,
+    }));
   };
 
   const { data } = useSWR<NewsData>(
@@ -167,6 +167,12 @@ export const Home = ({ match }: RouteComponentProps<{ id: string }>) => {
   };
 
   return (
-    <Dashboard items={filteredData} pageInfo={pageInfo} isWide={isWideEnough} />
+    <Dashboard
+      items={filteredData}
+      pageInfo={pageInfo}
+      isWide={isWideEnough}
+      upVote={upVote}
+      hide={markHidden}
+    />
   );
 };

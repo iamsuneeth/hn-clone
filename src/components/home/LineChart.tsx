@@ -18,6 +18,7 @@ const margin = 40;
 const defaultColors = {
   guide: "#ccc",
   domain: "#555",
+  line: "#2196f3",
 };
 
 const chartStyles = css`
@@ -111,16 +112,17 @@ export const LineChart = ({ data }: Props) => {
       .attr("class", "line")
       .attr("d", (value) => line(value))
       .attr("fill", "none")
-      .attr("stroke", "blue");
+      .attr("stroke", defaultColors.line);
 
     svg
-      .selectAll("data-circles")
+      .selectAll(".data-circle")
       .data(data)
       .join("circle")
       .attr("r", 5)
+      .attr("class", "data-circle")
       .attr("cx", (value) => x(value.id) as any)
       .attr("cy", (value) => y(value.votes))
-      .attr("fill", "blue");
+      .attr("fill", defaultColors.line);
   }, [data]);
 
   return (

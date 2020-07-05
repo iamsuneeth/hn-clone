@@ -10,6 +10,8 @@ interface DashboardProps {
   items: News[];
   pageInfo: PageInfo | undefined;
   isWide: boolean;
+  upVote: (id: string) => void;
+  hide: (id: string) => void;
 }
 
 const dashboardStyle = css`
@@ -18,7 +20,13 @@ const dashboardStyle = css`
   background-color: #ff6600;
 `;
 
-export const Dashboard = ({ items, pageInfo, isWide }: DashboardProps) => {
+export const Dashboard = ({
+  items,
+  pageInfo,
+  isWide,
+  upVote,
+  hide,
+}: DashboardProps) => {
   if (items.length === 0 || !pageInfo) {
     return null;
   }
@@ -29,6 +37,8 @@ export const Dashboard = ({ items, pageInfo, isWide }: DashboardProps) => {
         hasNextPage={pageInfo.pages - 1 !== pageInfo.currentPage}
         hasPrevPage={pageInfo.currentPage !== 0}
         currentPage={pageInfo.currentPage}
+        hide={hide}
+        upVote={upVote}
       />
       {isWide && <NewsChart items={items} />}
     </div>

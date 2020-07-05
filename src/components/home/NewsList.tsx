@@ -11,6 +11,7 @@ import { colors } from "../../theme/constants";
 
 const commonRowStyle = css`
   display: flex;
+  align-items: center;
   & > div {
     padding: 0.1rem 0.5rem;
     min-width: 5rem;
@@ -35,7 +36,7 @@ const tableContainerStyle = css`
 
 const tableRowStyle = css`
   ${commonRowStyle}
-  &:nth-child(2n) {
+  &:nth-of-type(2n) {
     background-color: ${colors.alternateBackground};
   }
 `;
@@ -94,6 +95,8 @@ interface newsListProps {
   currentPage: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
+  upVote: (id: string) => void;
+  hide: (id: string) => void;
 }
 
 export const NewsList = ({
@@ -101,6 +104,8 @@ export const NewsList = ({
   hasNextPage,
   hasPrevPage,
   currentPage,
+  hide,
+  upVote,
 }: newsListProps) => {
   return (
     <div css={tableContainerStyle} role="table" aria-label="newslist">
@@ -122,11 +127,15 @@ export const NewsList = ({
         {items.map((item) => {
           const url = item.url ? new URL(item.url) : null;
           return (
-            <div css={tableRowStyle}>
+            <div css={tableRowStyle} key={item.objectID}>
               <div className="bodycol">{item.num_comments}</div>
               <div className="bodycol">{item.points}</div>
               <div className="bodycol">
-                <IconButton icon={<Caret size={10} />} />
+                <IconButton
+                  icon={
+                    <Caret size={10} onClick={() => upVote(item.objectID)} />
+                  }
+                />
               </div>
               <div className="bodycol" css={newsDetailStyle}>
                 <div>
@@ -140,7 +149,14 @@ export const NewsList = ({
                     <TimeAgo date={item.created_at} />
                   </span>
                   <span>
-                    [<button css={hideButtonStyle}>Hide</button>]
+                    [
+                    <button
+                      css={hideButtonStyle}
+                      onClick={() => hide(item.objectID)}
+                    >
+                      Hide
+                    </button>
+                    ]
                   </span>
                 </div>
               </div>
