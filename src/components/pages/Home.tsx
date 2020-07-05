@@ -3,7 +3,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { StaticContext } from "react-router";
 import useSWR from "swr";
 import Loader from "react-loader";
-import { useMedia } from "react-use";
 import { get, set } from "idb-keyval";
 import { ListFetcher } from "../../api/request";
 import { Dashboard } from "../home/Dashboard";
@@ -62,7 +61,6 @@ export const Home = ({
   match,
   staticContext,
 }: RouteComponentProps<{ id: string }, AppStaticContext>) => {
-  const isWideEnough = useMedia("(min-width:768px)");
   const [state, setState] = useState<HomeState>({
     votes: {},
     hidden: {},
@@ -187,7 +185,6 @@ export const Home = ({
       <Dashboard
         items={filteredData}
         pageInfo={pageInfo}
-        isWide={isWideEnough}
         upVote={upVote}
         hide={markHidden}
       />

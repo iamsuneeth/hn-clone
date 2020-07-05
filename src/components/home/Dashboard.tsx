@@ -3,11 +3,11 @@ import { jsx, css } from "@emotion/core";
 import { NewsList } from "./NewsList";
 import { NewsChart } from "./NewsChart";
 import { News, PageInfo } from "../pages/Home";
+import { useMedia } from "react-use";
 
 interface DashboardProps {
   items: News[];
   pageInfo: PageInfo | undefined;
-  isWide: boolean;
   upVote: (id: string) => void;
   hide: (id: string) => void;
 }
@@ -16,15 +16,22 @@ const dashboardStyle = css`
   max-width: 1280px;
   margin: 0 auto;
   background-color: #ff6600;
+  @media screen and (max-width: 1279px) {
+    margin: 0 1rem;
+  }
+  @media screen and (max-width: 480px) {
+    margin: 0;
+  }
 `;
 
 export const Dashboard = ({
   items,
   pageInfo,
-  isWide,
   upVote,
   hide,
 }: DashboardProps) => {
+  const isWideEnough = useMedia("(min-width:768px)");
+
   if (items.length === 0 || !pageInfo) {
     return null;
   }
@@ -38,7 +45,7 @@ export const Dashboard = ({
         hide={hide}
         upVote={upVote}
       />
-      {isWide && <NewsChart items={items} />}
+      {isWideEnough && <NewsChart items={items} />}
     </div>
   );
 };
