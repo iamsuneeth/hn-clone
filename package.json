@@ -40,16 +40,14 @@
   "scripts": {
     "heroku-postbuild": "run-p build && webpack --config webpack.server.js --mode=production",
     "start": "node ./server-build/index.js",
-    "dev:client": "react-scripts start",
+    "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
     "dev:run": "nodemon ./server-build/index.js",
     "predev": "run-s build",
-    "dev": "run-p dev:*",
-    "preprod": "run-s build",
-    "prod": "NODE_ENV=production webpack --config webpack.server.js --mode=production"
+    "dev": "run-p dev:*"
   },
   "engines": {
     "node": "13.x",

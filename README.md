@@ -50,6 +50,8 @@ Creates final production build
 
 - Add More unit tests to make future updates easier
 - Replace Express with NestJs
+- Loading indicator for client side route switching
+- implement renderToNodeStream instead of renderToString
 
 ## Thanks
 

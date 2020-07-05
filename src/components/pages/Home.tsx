@@ -95,6 +95,10 @@ export const Home = ({
   const initialData =
     staticContext?.initialData ?? (window as any).__initialData__;
 
+  if (!staticContext?.initialData && (window as any).__initialData__) {
+    delete (window as any).__initialData__;
+  }
+
   const { data, error } = useSWR<NewsData>(
     `search?tags=story${match.params.id ? `&page=${match.params.id}` : ""}`,
     ListFetcher,

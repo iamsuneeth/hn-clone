@@ -23,11 +23,7 @@ app.use(
   })
 );
 
-const replaceData = (
-  data: string,
-  app: NodeJS.ReadableStream,
-  initialData: any
-) => {
+const replaceData = (data: string, app: string, initialData: any) => {
   return data
     .replace(
       '<style id="fresnel"></style>',
@@ -56,7 +52,7 @@ app.get("/*", async (req, res) => {
     );
 
     const context = { initialData };
-    const app = ReactDOMServer.renderToStaticNodeStream(
+    const app = ReactDOMServer.renderToString(
       /* Static router types doenst support adding custom keys to context object so casting it to any */
       <StaticRouter location={req.url} context={context as any}>
         <App />
