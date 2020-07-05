@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
+/** @jsx jsx */
 import { LineChart } from "./LineChart";
 import { News } from "../pages/Home";
-/** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { colors } from "../../theme/constants";
 

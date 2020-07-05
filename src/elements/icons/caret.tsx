@@ -1,22 +1,21 @@
-import React from "react";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import { Icon } from "./icon";
-import { ReactComponent as CaretSVG } from "../../images/caret-arrow-up.svg";
+import { colors } from "../../theme/constants";
 
-export interface SvgProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-}
+const caretStyle = css`
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
 
-export const Caret = ({ size = 20, ...props }: SvgProps) => {
+  border-bottom: 5px solid ${colors.textColorSecondary};
+`;
+
+export const Caret = () => {
   return (
     <Icon>
-      <CaretSVG
-        height={size}
-        width={size}
-        aria-hidden="true"
-        focusable="false"
-        fill="#888"
-        {...props}
-      />
+      <div css={caretStyle}></div>
     </Icon>
   );
 };

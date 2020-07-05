@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { News } from "../pages/Home";
@@ -43,10 +41,12 @@ const tableRowStyle = css`
 
 const secondaryStyle = css`
   color: ${colors.textColorSecondary};
+  font-size: 90%;
 `;
 
 const newsDetailStyle = css`
   display: flex;
+  flex-wrap: wrap;
   & > div {
     & > span {
       padding: 0 0.1rem;
@@ -54,6 +54,14 @@ const newsDetailStyle = css`
   }
   & > span {
     padding: 0 0.1rem;
+  }
+  a {
+    text-decoration: none;
+    color: ${colors.textColorSecondary};
+    :hover {
+      text-decoration: underline;
+      text-decoration-color: inherit;
+    }
   }
 
   @media screen and (max-width: 1079px) {
@@ -78,6 +86,7 @@ const seperator = css`
 const paginationContainer = css`
   display: flex;
   justify-content: flex-end;
+  padding: 0.2rem;
   a {
     color: ${colors.primary};
     text-decoration: none;
@@ -132,15 +141,18 @@ export const NewsList = ({
               <div className="bodycol">{item.points}</div>
               <div className="bodycol">
                 <IconButton
-                  icon={
-                    <Caret size={10} onClick={() => upVote(item.objectID)} />
-                  }
+                  icon={<Caret />}
+                  onClick={() => upVote(item.objectID)}
                 />
               </div>
               <div className="bodycol" css={newsDetailStyle}>
                 <div>
                   <span>{item.title}</span>
-                  {url && <span css={secondaryStyle}>{`(${url.host})`}</span>}
+                  {url && (
+                    <a href={item.url}>
+                      <span css={secondaryStyle}>{`(${url.host})`}</span>
+                    </a>
+                  )}
                 </div>
                 <div>
                   <span css={secondaryStyle}>by</span>

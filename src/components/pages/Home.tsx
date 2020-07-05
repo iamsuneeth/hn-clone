@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { StaticContext } from "react-router";
 import useSWR from "swr";
+import Loader from "react-loader";
 import { useMedia } from "react-use";
 import { get, set } from "idb-keyval";
 import { ListFetcher } from "../../api/request";
 import { Dashboard } from "../home/Dashboard";
 import { IDBKeys } from "../../constants/storage";
+import { colors } from "../../theme/constants";
 
 export interface News {
   num_comments: number;
@@ -51,7 +54,14 @@ const filterNews = (
   });
 };
 
-export const Home = ({ match }: RouteComponentProps<{ id: string }>) => {
+interface AppStaticContext extends StaticContext {
+  initialData?: NewsData;
+}
+
+export const Home = ({
+  match,
+  staticContext,
+}: RouteComponentProps<{ id: string }, AppStaticContext>) => {
   const isWideEnough = useMedia("(min-width:768px)");
   const [state, setState] = useState<HomeState>({
     votes: {},
@@ -86,13 +96,19 @@ export const Home = ({ match }: RouteComponentProps<{ id: string }>) => {
     }));
   };
 
-  const { data } = useSWR<NewsData>(
+  const { data, error } = useSWR<NewsData>(
     `search?tags=story${match.params.id ? `&page=${match.params.id}` : ""}`,
     ListFetcher,
     {
       revalidateOnFocus: false,
+      initialData: staticContext?.initialData,
     }
   );
+
+  if (error) {
+    // Error boundary should handle the error and display appropriate error
+    throw error;
+  }
 
   useEffect(() => {
     const initializeLocalState = async () => {
@@ -167,12 +183,14 @@ export const Home = ({ match }: RouteComponentProps<{ id: string }>) => {
   };
 
   return (
-    <Dashboard
-      items={filteredData}
-      pageInfo={pageInfo}
-      isWide={isWideEnough}
-      upVote={upVote}
-      hide={markHidden}
-    />
+    <Loader loaded={!!data} lines={10} color={colors.primary}>
+      <Dashboard
+        items={filteredData}
+        pageInfo={pageInfo}
+        isWide={isWideEnough}
+        upVote={upVote}
+        hide={markHidden}
+      />
+    </Loader>
   );
 };

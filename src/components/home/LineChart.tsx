@@ -1,11 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useRef, useEffect } from "react";
+/** @jsx jsx */
+import { useRef, useEffect } from "react";
 import { select } from "d3-selection";
 import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { max } from "d3-array";
 import { line as d3Line } from "d3-shape";
 import { axisBottom, axisLeft } from "d3-axis";
-/** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { colors } from "../../theme/constants";
 

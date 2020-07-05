@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { ReactElement } from "react";
 /** @jsx jsx */
+import { ReactElement } from "react";
 import { css, jsx } from "@emotion/core";
 interface IconButtonProps
   extends React.DetailedHTMLProps<
@@ -19,6 +18,10 @@ const buttonStyle = css`
   }
 `;
 
-export const IconButton = ({ icon }: IconButtonProps) => {
-  return <button css={buttonStyle}>{icon}</button>;
+export const IconButton = ({ icon, ...props }: IconButtonProps) => {
+  return (
+    <button css={buttonStyle} {...props}>
+      {icon}
+    </button>
+  );
 };
