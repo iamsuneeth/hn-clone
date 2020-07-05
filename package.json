@@ -42,8 +42,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-    "dev:start": "nodemon ./server-build/index.js",
-    "dev": "npm-run-all --parallel build dev:*"
+    "dev:run": "nodemon ./server-build/index.js",
+    "predev": "run-s build",
+    "dev": "run-p dev:*"
   },
   "eslintConfig": {
     "extends": "react-app"
