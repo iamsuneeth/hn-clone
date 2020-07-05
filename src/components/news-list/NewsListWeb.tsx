@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import TimeAgo from "react-timeago";
-import { Caret } from "../../elements/icons/caret";
-import { IconButton } from "../../elements/buttons/IconButton";
+import { Caret } from "../elements/icons/caret";
+import { IconButton } from "../elements/buttons/IconButton";
 import { colors } from "../../theme/constants";
 import { newsListProps } from "../home/NewsList";
 import { Pagination } from "./pagination";
+import { Button } from "../elements/buttons/Button";
 
 const commonRowStyle = css`
   display: flex;
@@ -70,10 +71,7 @@ const newsDetailStyle = css`
 `;
 
 const hideButtonStyle = css`
-  background: none;
-  border: 0;
   &:hover {
-    cursor: pointer;
     text-decoration: underline;
   }
 `;
@@ -88,26 +86,29 @@ export const NewsListWeb = ({
 }: newsListProps) => {
   return (
     <div css={tableContainerStyle} role="table" aria-label="newslist">
-      <div role="rowgroup" css={tableHeaderRowStyle}>
-        <div role="columnheader">Comments</div>
-        <div role="columnheader">Vote Count</div>
-        <div role="columnheader">Upvote</div>
-        <div role="columnheader">News Details</div>
+      <div role="rowgroup">
+        <div role="row" css={tableHeaderRowStyle}>
+          <div role="columnheader">Comments</div>
+          <div role="columnheader">Vote Count</div>
+          <div role="columnheader">Upvote</div>
+          <div role="columnheader">News Details</div>
+        </div>
       </div>
-      <div>
+      <div role="rowgroup">
         {items.map((item) => {
           const url = item.url ? new URL(item.url) : null;
           return (
-            <div css={tableRowStyle} key={item.objectID}>
-              <div>{item.num_comments}</div>
-              <div>{item.points}</div>
-              <div>
+            <div role="row" css={tableRowStyle} key={item.objectID}>
+              <div role="cell">{item.num_comments}</div>
+              <div role="cell">{item.points}</div>
+              <div role="cell">
                 <IconButton
+                  aria-label="upvote"
                   icon={<Caret />}
                   onClick={() => upVote(item.objectID)}
                 />
               </div>
-              <div css={newsDetailStyle}>
+              <div role="cell" css={newsDetailStyle}>
                 <div>
                   <span>{item.title}</span>
                   {url && (
@@ -124,12 +125,12 @@ export const NewsListWeb = ({
                   </span>
                   <span>
                     [
-                    <button
+                    <Button
                       css={hideButtonStyle}
                       onClick={() => hide(item.objectID)}
                     >
                       Hide
-                    </button>
+                    </Button>
                     ]
                   </span>
                 </div>

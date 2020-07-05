@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { StaticContext } from "react-router";
 import useSWR from "swr";
-import Loader from "react-loader";
 import { get, set } from "idb-keyval";
 import { ListFetcher } from "../../api/request";
 import { Dashboard } from "../home/Dashboard";
 import { IDBKeys } from "../../constants/storage";
-import { colors } from "../../theme/constants";
 
 export interface News {
   num_comments: number;
@@ -94,12 +92,15 @@ export const Home = ({
     }));
   };
 
+  const initialData =
+    staticContext?.initialData ?? (window as any).__initialData__;
+
   const { data, error } = useSWR<NewsData>(
     `search?tags=story${match.params.id ? `&page=${match.params.id}` : ""}`,
     ListFetcher,
     {
       revalidateOnFocus: false,
-      initialData: staticContext?.initialData,
+      initialData,
     }
   );
 
@@ -181,13 +182,11 @@ export const Home = ({
   };
 
   return (
-    <Loader loaded={!!data} lines={10} color={colors.primary}>
-      <Dashboard
-        items={filteredData}
-        pageInfo={pageInfo}
-        upVote={upVote}
-        hide={markHidden}
-      />
-    </Loader>
+    <Dashboard
+      items={filteredData}
+      pageInfo={pageInfo}
+      upVote={upVote}
+      hide={markHidden}
+    />
   );
 };

@@ -2,10 +2,11 @@
 import { css, jsx } from "@emotion/core";
 import { newsListProps } from "../home/NewsList";
 import { colors } from "../../theme/constants";
-import { IconButton } from "../../elements/buttons/IconButton";
-import { Caret } from "../../elements/icons/caret";
+import { IconButton } from "../elements/buttons/IconButton";
+import { Caret } from "../elements/icons/caret";
 import ReactTimeago from "react-timeago";
 import { Pagination } from "./pagination";
+import { Button } from "../elements/buttons/Button";
 
 const listContainerStyle = css`
   font-size: 90%;
@@ -45,10 +46,7 @@ const secondaryStyle = css`
 `;
 
 const hideButtonStyle = css`
-  background: none;
-  border: 0;
   &:hover {
-    cursor: pointer;
     text-decoration: underline;
   }
 `;
@@ -67,10 +65,11 @@ export const NewsListMobile = ({
       <div css={listbodyStyle}>
         {items.map((item) => {
           return (
-            <div css={rowStyle}>
+            <div css={rowStyle} key={item.objectID}>
               <div css={heroRowStyles}>
                 <div>
                   <IconButton
+                    aria-label="upvote"
                     icon={<Caret />}
                     onClick={() => upVote(item.objectID)}
                   />
@@ -82,12 +81,13 @@ export const NewsListMobile = ({
                     <ReactTimeago date={item.created_at} />
                     <span>
                       [
-                      <button
+                      <Button
+                        aria-label="hide news"
                         css={hideButtonStyle}
                         onClick={() => hide(item.objectID)}
                       >
                         Hide
-                      </button>
+                      </Button>
                       ]
                     </span>
                   </div>

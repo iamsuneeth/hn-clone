@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { MediaContextProvider, Media } from "../../providers/MediaProvider";
+import { MediaContextProvider, Media } from "../../../providers/MediaProvider";
 
 /**
  * Universal implementation - support SSR ,thanks to @artsy/fresnel

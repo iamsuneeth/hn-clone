@@ -8,6 +8,8 @@ import { StaticRouter } from "react-router-dom";
 
 import App from "../src/App";
 import { ListFetcher } from "../src/api/request";
+import { mediaStyles } from "../src/providers/MediaProvider";
+import serialize from "serialize-javascript";
 
 const PORT = process.env.PORT || 10080;
 const app = express();
@@ -37,7 +39,7 @@ app.get("/*", async (req, res) => {
     );
 
     const context = { initialData };
-    const app = ReactDOMServer.renderToNodeStream(
+    const app = ReactDOMServer.renderToStaticNodeStream(
       /* Static router types doenst support adding custom keys to context object so casting it to any */
       <StaticRouter location={req.url} context={context as any}>
         <App />
@@ -53,7 +55,14 @@ app.get("/*", async (req, res) => {
         console.error("Something went wrong:", err);
         return res.status(500).send("Oops, better luck next time!");
       }
-
+      data = data.replace(
+        '<style id="fresnel"></style>',
+        `<style type="text/css">${mediaStyles}</style>`
+      );
+      data = data.replace(
+        '<script id="initialData"></script>',
+        `<script>window.__initialData__ = ${serialize(initialData)}</script>`
+      );
       return res.send(
         data.replace('<div id="root"></div>', `<div id="root">${app}</div>`)
       );

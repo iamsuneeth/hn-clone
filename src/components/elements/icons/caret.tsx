@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { Icon } from "./icon";
-import { colors } from "../../theme/constants";
+import { colors } from "../../../theme/constants";
 
 const caretStyle = css`
   width: 0;
