@@ -1,4 +1,6 @@
 /** @jsx jsx */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from "react";
 import { css, jsx } from "@emotion/core";
 import TimeAgo from "react-timeago";
 import { Caret } from "../elements/icons/caret";
@@ -85,7 +87,12 @@ export const NewsListWeb = ({
   upVote,
 }: newsListProps) => {
   return (
-    <div css={tableContainerStyle} role="table" aria-label="newslist">
+    <div
+      css={tableContainerStyle}
+      role="table"
+      aria-label="newslist"
+      data-id="web"
+    >
       <div role="rowgroup">
         <div role="row" css={tableHeaderRowStyle}>
           <div role="columnheader">Comments</div>
@@ -104,6 +111,7 @@ export const NewsListWeb = ({
               <div role="cell">
                 <IconButton
                   aria-label="upvote"
+                  title="upVoteButton"
                   icon={<Caret />}
                   onClick={() => upVote(item.objectID)}
                 />
@@ -126,8 +134,10 @@ export const NewsListWeb = ({
                   <span>
                     [
                     <Button
+                      aria-label="hide"
                       css={hideButtonStyle}
                       onClick={() => hide(item.objectID)}
+                      title="hideButton"
                     >
                       Hide
                     </Button>

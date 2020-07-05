@@ -60,7 +60,12 @@ export const NewsListMobile = ({
   currentPage,
 }: newsListProps) => {
   return (
-    <div css={listContainerStyle} role="table" aria-label="newslist">
+    <div
+      css={listContainerStyle}
+      role="table"
+      aria-label="newslist"
+      data-id="mobile"
+    >
       <div css={listHeaderStyle}></div>
       <div css={listbodyStyle}>
         {items.map((item) => {

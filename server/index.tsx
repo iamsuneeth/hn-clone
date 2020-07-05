@@ -23,6 +23,23 @@ app.use(
   })
 );
 
+const replaceData = (
+  data: string,
+  app: NodeJS.ReadableStream,
+  initialData: any
+) => {
+  return data
+    .replace(
+      '<style id="fresnel"></style>',
+      `<style type="text/css">${mediaStyles}</style>`
+    )
+    .replace(
+      '<script id="initialData"></script>',
+      `<script>window.__initialData__ = ${serialize(initialData)}</script>`
+    )
+    .replace('<div id="root"></div>', `<div id="root">${app}</div>`);
+};
+
 /*
 default root
  */
@@ -55,17 +72,8 @@ app.get("/*", async (req, res) => {
         console.error("Something went wrong:", err);
         return res.status(500).send("Oops, better luck next time!");
       }
-      data = data.replace(
-        '<style id="fresnel"></style>',
-        `<style type="text/css">${mediaStyles}</style>`
-      );
-      data = data.replace(
-        '<script id="initialData"></script>',
-        `<script>window.__initialData__ = ${serialize(initialData)}</script>`
-      );
-      return res.send(
-        data.replace('<div id="root"></div>', `<div id="root">${app}</div>`)
-      );
+
+      return res.send(replaceData(data, app, initialData));
     });
   } catch (error) {
     console.error("Something went wrong:", error);
