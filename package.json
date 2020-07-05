@@ -38,7 +38,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "heroku-postbuild": "webpack --config webpack.server.js --mode=production",
+    "heroku-postbuild": "run-p build && webpack --config webpack.server.js --mode=production",
     "start": "node ./server-build/index.js",
     "dev:client": "react-scripts start",
     "build": "react-scripts build",
