@@ -15,13 +15,13 @@ const newsChartStyle = css`
 export const NewsChart = ({ items }: NewsChartProps) => {
   const chartData = items.map((item) => {
     return {
-      id: item.objectID,
-      votes: item.points,
+      label: item.objectID,
+      value: item.points,
     };
   });
   return (
     <div css={newsChartStyle}>
-      <LineChart data={chartData} />
+      <LineChart data={chartData} xLabel="ID" yLabel="Votes" />
     </div>
   );
 };

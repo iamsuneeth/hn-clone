@@ -101,7 +101,9 @@ export const Home = ({
   }
 
   const { data, error } = useSWR<NewsData>(
-    `search?tags=story${match.params.id ? `&page=${match.params.id}` : ""}`,
+    `search_by_date?tags=story${
+      match.params.id ? `&page=${match.params.id}` : ""
+    }`,
     ListFetcher,
     {
       revalidateOnFocus: false,

@@ -51,7 +51,9 @@ Creates final production build
 - Add More unit tests to make future updates easier
 - Replace Express with NestJs
 - implement renderToNodeStream instead of renderToString
-- make chart responsive with window resize
+- ~~make chart responsive with window resize~~ - done
+- Add hidden list section to unhide hidden news
+- implement stale-while-revalidate for sw caching.
 
 ## Thanks
 
