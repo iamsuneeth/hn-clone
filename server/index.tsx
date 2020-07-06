@@ -10,6 +10,7 @@ import App from "../src/App";
 import { ListFetcher } from "../src/api/request";
 import { mediaStyles } from "../src/providers/MediaProvider";
 import serialize from "serialize-javascript";
+import { URLS } from "../src/api/constants";
 
 const PORT = process.env.PORT || 10080;
 const app = express();
@@ -46,7 +47,7 @@ app.get("/*", async (req, res) => {
      * If more routes to be added, a seperate route array need to be created with its own initial fetch function
      */
     const initialData = await ListFetcher(
-      `search?tags=story${
+      `${URLS.searchByDate}${
         req.url && req.url !== "/" ? `&page=${req.url.replace("/", "")}` : ""
       }`
     );

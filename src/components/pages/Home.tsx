@@ -7,6 +7,7 @@ import { ListFetcher } from "../../api/request";
 import { Dashboard } from "../home/Dashboard";
 import { IDBKeys } from "../../constants/storage";
 import { Spinner } from "../elements/loader/Loader";
+import { URLS } from "../../api/constants";
 
 export interface News {
   num_comments: number;
@@ -101,9 +102,7 @@ export const Home = ({
   }
 
   const { data, error } = useSWR<NewsData>(
-    `search_by_date?tags=story${
-      match.params.id ? `&page=${match.params.id}` : ""
-    }`,
+    `${URLS.searchByDate}${match.params.id ? `&page=${match.params.id}` : ""}`,
     ListFetcher,
     {
       revalidateOnFocus: false,
